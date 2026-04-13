@@ -1,0 +1,5 @@
+# Ignore those files :D
+
+flake.lock
+.envrc
+.direnv/

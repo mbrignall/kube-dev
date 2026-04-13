@@ -4,7 +4,61 @@
 
 Learning from the Kubernetes course as a refresher. Have k8s running on home server, want deeper knowledge.
 
-* Day 1
+No spoilers intended, but I have a Nix Darwin setup on MacBook Pro. I had to do some extra steps to get colima, docker and the kubernetes tools working nicely which I cover below.
+
+* CH-1 Install and Setup
+
+** Steps 1-3: Setup on Nix Darwin
 
 Set up this repo and follow the first part of the course.
 
+Context: I'm using nix darwin so had to jump through a few steps in advance before I could continue with the course:
+
+Steps taken:
+
+Once created ~flake.nix~ I also included a ~.envrc~ file with a single line: ~use flake~ which points the direnv to the flake.nix file. This means when I open the files in the repo directory it instantly loads the packages in the flake and provides docker/minikube environments. 
+
+Run the minikube in a 'detached' state:
+
+~minikube dashboard --port=63840 > /dev/null 2>&1 &~
+
+With that we have Nix flake with colima running docker running minikube - excellent!
+
+** Step 4: Minikube and delpoyment
+
+- Installing the boot.dev CLI
+
+I followed the instruction on the repo for this one but used Nix for the Go installation which was just adding go to the list of packages and then updating ~.zshrc~ in the guide on the following link:
+
+- [[https://github.com/bootdotdev/bootdev][bootdev CLI]]
+
+Once I completed the instructions it was a simple case of using the login command and then I had access to use the CLI commands in the tutorial.
+
+Running the commands came with success:
+
+All tests passed! 🎉
+
+Return to your browser to continue with the next lesson.
+
+** Step 5: Deploying Synergy Chat
+
+Following the guide I saw commands similar to those I'm using for my 'media' homelab cluster. After getting the pod name I was able to port forward to 8080 allowing me to visit the chat app in my browser.
+
+~kubectl get pods~
+
+and
+
+~kubectl port-forward PODNAME 8080:~
+
+To forward the port of the PODNAME (replaced by the output of the first command)
+Once again the satisfying outcome:
+
+All tests passed! 🎉
+
+Return to your browser to continue with the next lesson.
+
+** Steps 6-7: Minikube vs. Prod
+
+This is a multi choice answer that comes from reading, and understanding Kubernetes and why Minikube does not work for large deployments across multiple nodes and applications.
+
+That's day one, I'll continue into CH-2: Pods tomorrow.
