@@ -1,0 +1,10 @@
+#+title: Kubernetes from boot.dev
+#+author: mbrignall
+#+date: 2026-04-13
+
+Learning from the Kubernetes course as a refresher. Have k8s running on home server, want deeper knowledge.
+
+* Day 1
+
+Set up this repo and follow the first part of the course.
+
