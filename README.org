@@ -4,11 +4,11 @@
 
 Learning from the Kubernetes course as a refresher. Have k8s running on home server, want deeper knowledge.
 
-No spoilers intended, but I have a Nix Darwin setup on MacBook Pro. I had to do some extra steps to get colima, docker and the kubernetes tools working nicely which I cover below.
+No spoilers intended, just recording for reference and personal development goals. I have a Nix Darwin setup on MacBook Pro. I had to do some extra steps to get colima, docker and the kubernetes tools working nicely which I cover below.
 
 * CH-1 Install and Setup
 
-** Steps 1-3: Setup on Nix Darwin
+** Levels 1-3: Setup on Nix Darwin
 
 Set up this repo and follow the first part of the course.
 
@@ -24,7 +24,7 @@ Run the minikube in a 'detached' state:
 
 With that we have Nix flake with colima running docker running minikube - excellent!
 
-** Step 4: Minikube and delpoyment
+** Level 4: Minikube and deployment
 
 - Installing the boot.dev CLI
 
@@ -40,7 +40,7 @@ All tests passed! 🎉
 
 Return to your browser to continue with the next lesson.
 
-** Step 5: Deploying Synergy Chat
+** Level 5: Deploying Synergy Chat
 
 Following the guide I saw commands similar to those I'm using for my 'media' homelab cluster. After getting the pod name I was able to port forward to 8080 allowing me to visit the chat app in my browser.
 
@@ -57,7 +57,7 @@ All tests passed! 🎉
 
 Return to your browser to continue with the next lesson.
 
-** Steps 6-7: Minikube vs. Prod
+** Levels 6-7: Minikube vs. Prod
 
 This is a multi choice answer that comes from reading, and understanding Kubernetes and why Minikube does not work for large deployments across multiple nodes and applications.
 
@@ -65,11 +65,11 @@ That's day one, I'll continue into CH-2: Pods tomorrow.
 
 * CH-2: Pods
 
-** Steps 1-3: Pods and their ephemeral nature
+** Levels 1-3: Pods and their ephemeral nature
 
 Here we learned about the unique features of pods - that they are flexible and resilient and by design ephemeral. Also we learned how to replicate pods by editing the deployment config file. We also deleted a pod to see it respawn.
 
-** Step 4: Unique IP addresses
+** Level 4: Unique IP addresses
 
 Kubernetes pods all get allocated a unique IP address and can be found by using the following command:
 
@@ -77,3 +77,35 @@ Kubernetes pods all get allocated a unique IP address and can be found by using 
 
 This part of the course also introduced the use of the kubectl proxy serving details of the pods running in json format.
 
+* CH-3: Deployments
+
+** Level 1: Deployments
+
+Editing the yaml config file to increase the replicas to 10 and using ~kubectl get pods~ to find they're all active and running. Deployment of many is simple!
+
+** Level 2-3: Replica Sets
+
+As mentioned, Replica Sets are rapped into the deployment configuration, but are mentioned and shown as a command for awareness. You will generally interact at the deployment level.
+
+~kubectl get replicasets~
+** Level 4: YAML config
+
+Because we all love it.
+
+Getting the deployments yaml file is simple with:
+
+~kubectl get deployment synergychat-web -o yaml > web-deployment.yaml~
+
+Once the file is edited, here I changed the replicas from 10 to 3, I'm going to run the command to apply changes:
+
+~kubectl apply -f web-deployment.yaml~
+
+Downloading the yaml config file from the deployment and reapplying got rid of the errors and now the deployment is up to date.
+
+** Level 5: API Service
+
+Here I'm getting to creating a yaml file for a second service. After following the requirements and using the [[https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment][reference docs]] I applied the changes and the new service is running!
+
+** Level 6: Thrashing pods
+
+When a pod's status is CrashLoopBackoff, that means the container is crashing (the program is exiting with error code 1).
