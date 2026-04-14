@@ -62,3 +62,18 @@ Return to your browser to continue with the next lesson.
 This is a multi choice answer that comes from reading, and understanding Kubernetes and why Minikube does not work for large deployments across multiple nodes and applications.
 
 That's day one, I'll continue into CH-2: Pods tomorrow.
+
+* CH-2: Pods
+
+** Steps 1-3: Pods and their ephemeral nature
+
+Here we learned about the unique features of pods - that they are flexible and resilient and by design ephemeral. Also we learned how to replicate pods by editing the deployment config file. We also deleted a pod to see it respawn.
+
+** Step 4: Unique IP addresses
+
+Kubernetes pods all get allocated a unique IP address and can be found by using the following command:
+
+~kubectl get pods -o wide~
+
+This part of the course also introduced the use of the kubectl proxy serving details of the pods running in json format.
+
