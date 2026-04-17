@@ -90,6 +90,7 @@ Editing the yaml config file to increase the replicas to 10 and using ~kubectl g
 As mentioned, Replica Sets are rapped into the deployment configuration, but are mentioned and shown as a command for awareness. You will generally interact at the deployment level.
 
 ~kubectl get replicasets~
+
 ** Level 4: YAML config
 
 Because we all love it.
@@ -112,6 +113,7 @@ Here I'm getting to creating a yaml file for a second service. After following t
 
 When a pod's status is CrashLoopBackoff, that means the container is crashing (the program is exiting with error code 1).
 * CH-4: ConfigMaps
+
 ** Level 1: ConfigMaps
 
 Here I am applying a ConfigMap for the newly created API service, other applications for ConfigMaps:
@@ -163,6 +165,7 @@ Once I had removed the deployment and then reapplied the file the error was fixe
 With that the section was complete.
 
 * CH-5: Services
+
 ** Level 1: Services
 
 This one introduces new 'service' to the cluster. I followed the guide and was getting issues when attempting the port command:
@@ -203,4 +206,37 @@ As it stated the API service is moving back to the ClusterIP type.
 
 And that's the end of this module! yes.
 
+* CH-6: Gateway
 
+** Level 1: Gateway
+
+Here I created files for the main gateway:
+
+- ~api-httproute.yaml~
+- ~app-gateway.yaml~
+- ~app-gatewayclass.yaml~
+- ~web-httproute.yaml~
+
+Note: Always apply your changes ;)
+
+** Level 2: DNS
+
+Setting ~/etc/hosts/~ to include the entries needed to resolve our ~synchat.internal~ and ~synchatapi.internal~ domains locally.
+
+** Level 3: Tunnel
+
+Set up a tunnel to forward traffic to my cluster:
+
+~minikube tunnel -c~
+
+** Level 3-4: Gateway Types
+
+This is teaching all about gateway types, adding the link below for ref:
+
+- [[https://cloud.google.com/kubernetes-engine/docs/how-to/deploying-gateways][Gateway Docs]]
+
+** Level 6: Chat
+
+I got lost on this one, because I mapped the config correctly and got the deployment updated but something wasn't right as the chat couldn't call the API. I was getting errors in the browser console, looking for messages. I could not work it out for a while, but then I went over the files with a fine toothed comb and the error occurred when I copied the other service file as advised. I forgot to change ~selector/app~ to ~synergychat-api~ from the other file. That fixed everything.
+
+With that sorted I am no able to move on. Phew!
