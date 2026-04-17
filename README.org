@@ -16,7 +16,9 @@ Context: I'm using nix darwin so had to jump through a few steps in advance befo
 
 Steps taken:
 
-Once created ~flake.nix~ I also included a ~.envrc~ file with a single line: ~use flake~ which points the direnv to the flake.nix file. This means when I open the files in the repo directory it instantly loads the packages in the flake and provides docker/minikube environments. 
+Once created ~flake.nix~ I also included a ~.envrc~ file with a single line: ~use flake~ which points the direnv to the flake.nix file. This means when I open the files in the repo directory it instantly loads the packages in the flake and provides docker/minikube environments.
+
+~minikube start --extra-config="apiserver.cors-allowed-origins=['http://boot.dev']"~
 
 Run the minikube in a 'detached' state:
 
@@ -48,7 +50,7 @@ Following the guide I saw commands similar to those I'm using for my 'media' hom
 
 and
 
-~kubectl port-forward PODNAME 8080:~
+~kubectl port-forward PODNAME 8080:8080~
 
 To forward the port of the PODNAME (replaced by the output of the first command)
 Once again the satisfying outcome:
@@ -109,3 +111,55 @@ Here I'm getting to creating a yaml file for a second service. After following t
 ** Level 6: Thrashing pods
 
 When a pod's status is CrashLoopBackoff, that means the container is crashing (the program is exiting with error code 1).
+* CH-4: ConfigMaps
+** Level 1: ConfigMaps
+
+Here I am applying a ConfigMap for the newly created API service, other applications for ConfigMaps:
+
+- Ports
+- URLs of other services
+- Feature flags
+- Settings that change between environments, like DEBUG mode
+
+** Level 2: Applying the ConfigMap
+
+Mapping the ~API_PORT~ to 8080: ~kubectl port-forward <pod-name> 8080:8080~
+
+** Levels 3-4: ConfigMaps are insecure
+
+As mentioned above ConfigMaps only apply to things you're happy with being visible to everyone with access to the cluster.
+
+** Level 5: Crawler
+
+I deployed a new service for the Crawler: This is an application that continuously crawls Project Gutenberg and exposes the juicy data that it finds via a JSON API.
+
+Add some new environment variables:
+
+#+begin_src yaml
+  CRAWLER_PORT: "8080"
+  CRAWLER_KEYWORDS: love,hate,joy,sadness,anger,disgust,fear,surprise
+#+end_src
+
+We can use the envFrom key instead of the env key to reference the entire config map and make it available to the pods in the deployment:
+
+#+begin_src yaml
+  envFrom:
+  - configMapRef:
+      name: synergychat-crawler-configmap
+#+end_src
+
+Here I hit a bit of a roadblock as I mistakenly didn't change the deployment name to the new crawler name after copying the file. This created an erroring pod that I had to then remove. Deleting the pod just restarted it so I eventually worked out that I had to delete the deployment:
+
+~kubectl delete deployment synergychat-api~
+
+Once I had removed the deployment and then reapplied the file the error was fixed and I was able to complete the module.
+
+#+begin_src 
+  NAME                                   READY   STATUS             RESTARTS     AGE
+  synergychat-api-6c7dc8495b-vt6rt       0/1     CrashLoopBackOff   1 (6s ago)   10s
+  synergychat-api-6c8d555cd6-494zs       1/1     Running            0            3m57s
+#+end_src
+
+With that the section was complete.
+
+* CH-5: Services
