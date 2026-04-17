@@ -163,3 +163,44 @@ Once I had removed the deployment and then reapplied the file the error was fixe
 With that the section was complete.
 
 * CH-5: Services
+** Level 1: Services
+
+This one introduces new 'service' to the cluster. I followed the guide and was getting issues when attempting the port command:
+
+~kubectl port-forward service/web-service 8080:80~
+
+For this I ascertained that the port was in use but I could work out off the bat how to check that.
+
+#+begin_src
+    $ kubectl port-forward service/web-service 8080:80
+
+    Unable to listen on port 8080: Listeners failed to create with the following errors: [unable to create listener: Error listen tcp4 127.0.0.1:8080: bind: address already in use unable to create listener: Error listen tcp6 [::1]:8080: bind: address already in use]
+#+end_src
+
+After a search I found that I could grep ps for this:
+
+~ps -ef | grep port-forward~
+
+Which helped identify the crawler was forwarding to port 8080 which was conflicting with this new command.
+
+I used ps kill to stop the port forwarding, that may cause issues down the line but for now it fixed the issue of completing this service challenge.
+
+** Level 2-3: Service Types
+
+This was multi-choice questions based on the course material.
+
+** Level 4: API Service
+
+Here I created a API service for serving front-end assets using the template from the web-service.
+
+** Level 5: Crawler Service
+
+Added a crawler service here that used the default ClusterIP type.
+
+** Level 6: Change the API Service
+
+As it stated the API service is moving back to the ClusterIP type.
+
+And that's the end of this module! yes.
+
+
