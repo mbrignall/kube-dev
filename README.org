@@ -240,3 +240,30 @@ This is teaching all about gateway types, adding the link below for ref:
 I got lost on this one, because I mapped the config correctly and got the deployment updated but something wasn't right as the chat couldn't call the API. I was getting errors in the browser console, looking for messages. I could not work it out for a while, but then I went over the files with a fine toothed comb and the error occurred when I copied the other service file as advised. I forgot to change ~selector/app~ to ~synergychat-api~ from the other file. That fixed everything.
 
 With that sorted I am no able to move on. Phew!
+
+* CH-7: Storage
+
+** Level 1: Storage in Kubernetes
+
+Here I added a new configmap entry for the db that will be used to store the messages and updated the deployment. Then observed after deleting the pod the outcome/affect on the stored messages.
+
+** Level 2: Ephemeral Volumes
+
+This was quite a challenge when it came to adding extra containers but when I sat back and actually read what was required it came together in the end. Note: Always READ the logs :D
+
+** Levels 3-4: Containers in pods
+
+This helped me understand how containers work in pods and the separation of configmap and resources.
+
+** Level 5: Persistence
+
+Now there is a persistent volume in the deployment cluster.
+
+** Level 6-7: Attach Persistence
+
+Following creation this module shows how to connect/attach the persistent volume to the deployment. I updated the config for both the deployment and the configmap and we're good to go. Data is persistent.
+
+** Level 8: Databases
+
+Learning when to use Kubernetes and other DB options is covered here. Use a DB for prod, like.
+
