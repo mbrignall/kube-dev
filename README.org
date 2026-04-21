@@ -85,6 +85,10 @@ This part of the course also introduced the use of the kubectl proxy serving det
 
 Editing the yaml config file to increase the replicas to 10 and using ~kubectl get pods~ to find they're all active and running. Deployment of many is simple!
 
+To edit the web deployment you can use the following:
+
+~kubectl edit deployment synergychat-web~
+
 ** Level 2-3: Replica Sets
 
 As mentioned, Replica Sets are rapped into the deployment configuration, but are mentioned and shown as a command for awareness. You will generally interact at the deployment level.
@@ -283,3 +287,40 @@ Some questions about the current module and knowledge check.
 
 And with that we're now done with namespaces.
 
+* CH-9: Scaling
+
+** Level 1: Top
+
+Learning about the metrics server (minikube) for more details (metrics) about pods etc
+
+** Levels 2-5: Vertical and Horizontal Scaling
+
+Here are some general questions to challenge the knowledge learned about scaling.
+
+** Level 6: Resource Limits
+
+I set up a test pod with resource limits on CPU of ~50m~ as advised. This was showing in top too as a viewable metric.
+
+** Level 7: Limits - RAM
+
+Same as previous but this time for RAM and also a new configmap for RAM allocation/limits.
+
+** Level 8: Breaking the Limits
+
+I increased the RAM of the test deployment to 500Mi and that crashed the pod (and also caused issues with my system in general ;p ). So we live and learn.
+
+** Level 9: Fix the limits
+
+Reducing the RAM of the test deployment to avoid further problems.
+
+** Level 10: Horizontal Pod Autoscaling (HPA)
+
+Deployed the HPA configuration to limit the cpu allocation and min/max replicas in a separate file.
+
+** Level 11: HPA - Web
+
+** Level 12: HPA fix
+
+Lowering the CPU allocation in the test CPU deployment so it doesn't eat the resource unnecessarily.
+
+And we're on to the final challenge: nodes!
