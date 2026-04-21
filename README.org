@@ -267,3 +267,19 @@ Following creation this module shows how to connect/attach the persistent volume
 
 Learning when to use Kubernetes and other DB options is covered here. Use a DB for prod, like.
 
+* CH-8: Namespaces
+
+** Levels 1-2: Namespaces and moving namespaces
+
+Updating and creating namespaces over the next two levels. This gave insight into using namespaces (like I've done before personally), and how it may be applied to working teams in a prod environment. Here I created and moved the crawler deployment, service and configmap to the ~crawler~ namespace.
+
+** Level 3: Inter-cluster DNS
+
+Here I added a new line to the API configmap and updated the pod and deployment. After a restart of the pod I've now got the API calling over: ~http://<service-name>.<namespace>.svc.cluster.local~ neat!
+
+** Levels 4-5: Namespaces and routing review
+
+Some questions about the current module and knowledge check.
+
+And with that we're now done with namespaces.
+
